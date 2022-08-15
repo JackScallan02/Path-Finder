@@ -4,7 +4,7 @@
 class Maze {
   int numRows;
   int numCols;
-  std::vector<std::vector<char> > maze;
+  std::vector<std::vector<char> > mazeRepresentation;
 
 
   public: Maze(int numRows, int numCols) {
@@ -25,10 +25,10 @@ class Maze {
       Set this->maze
     */
     /* PSUEDOCODE
-      1. Populate array 'maze' with 'X'
+      1. Populate array 'mazeRepresentation' with 'X'
       For (i to numRows)
         For (j to numCols)
-          numCols[i].push_back('X')
+          mazeRepresentation[i].push_back('X')
 
       2. Create 2 entrances per side
          For each column value in maze[0]
@@ -47,6 +47,16 @@ class Maze {
 
       4. Set this->maze = maze
     */
+
+    for (int i = 0; i < this->numRows; i++) {
+      std::vector<char> row;
+      this->mazeRepresentation.push_back(row);
+      for (int j = 0; j < this->numCols; j++) {
+        this->mazeRepresentation[i].push_back('X');
+      }
+    }
+
+
   }
 
   int const getCols() {
@@ -57,27 +67,31 @@ class Maze {
     return this->numRows;
   }
 
+
+
   std::vector<std::vector<char> > getMaze() {
-    return this->maze;
+    return this->mazeRepresentation;
   }
 
 };
 
-std::ostream& operator<<(std::ostream &s, const Maze &maze) {
+std::ostream& operator<<(std::ostream &s, Maze &maze) {
   std::string output = "";
-  /*
-  For each row in maze.maze
-    For each col in maze.maze
-      output str += maze.maze[row][col]
+  
+  for (int i = 0; i < maze.getRows(); i++) {
+    for (int j = 0; j < maze.getCols(); j++) {
+      output += maze.getMaze()[i][j];
+      output += " ";
+    }
+    output += "\n";
+  }
 
-  return output str
-  */
   return s << output;
 }
 
 int main() {
-
-
+  Maze maze(3, 4);
+  std::cout << maze;
   return 0;
 
 }
