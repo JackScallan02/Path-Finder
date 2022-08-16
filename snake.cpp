@@ -23,8 +23,8 @@ int snakeDfs(Maze &maze, std::vector<int> curPos) {
   /*
     Idea: snake enters from left column, tries to find exit in top, bottom, or right
     perform dfs starting at column 0, and mark each visited coordinate as "visited"
-      if we find an exit, return
-
+      if we find an exit, or no more openings, return
+      if we find an opening, dfs(opening)
   */
 
 
