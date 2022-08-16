@@ -96,6 +96,7 @@ void Maze::constructMaze() {
   //Constructs a maze with empty chars around the border and fills it
   //with 'X' as a block or ' ' as an opening.
 
+  //Fill top row with empty chars
   int rowIndex = 0;
   std::vector<char> row;
   mazeRepresentation.push_back(row);
@@ -104,6 +105,7 @@ void Maze::constructMaze() {
     rowIndex++;
   }
 
+  //Fill body, make left and right columns empty chars
   for (int i = 1; i < numRows + 1; i++) {
     row = std::vector<char>();
     row.push_back(' ');
@@ -115,6 +117,7 @@ void Maze::constructMaze() {
 
   }
 
+  //Fill bottom row with empty chars
   rowIndex = 0;
   row = std::vector<char>();
   mazeRepresentation.push_back(row);
@@ -122,6 +125,10 @@ void Maze::constructMaze() {
     mazeRepresentation[mazeRepresentation.size() - 1].push_back(' ');
     rowIndex++;
   }
+
+  //Set left side boundaries
+  mazeRepresentation[0][0] = 'X';
+  mazeRepresentation[numRows + 1][0] = 'X';
 
   setBorderEntrances();
   setInnerPaths();
