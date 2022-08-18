@@ -15,6 +15,7 @@ class Maze {
     int const getCols();
     int const getRows();
     std::vector<std::vector<char> > getMaze();
+    void setMazeVal(int i, int j, char val);
 };
 
 std::ostream& operator<<(std::ostream &s, Maze &maze);

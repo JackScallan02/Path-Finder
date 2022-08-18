@@ -10,6 +10,7 @@ Maze::Maze(int numRows, int numCols) {
 
   this->numRows = numRows;
   this->numCols = numCols;
+
   constructMaze();
 }
 
@@ -146,6 +147,10 @@ int const Maze::getRows() {
 
 std::vector<std::vector<char> > Maze::getMaze() {
   return mazeRepresentation;
+}
+
+void Maze::setMazeVal(int i, int j, char val) {
+  mazeRepresentation[i][j] = val;
 }
 
 
