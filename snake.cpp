@@ -25,7 +25,7 @@ void db(std::vector<int> curPos) {
   std::cout << "Row index: " << curPos[0] << " Col index: " << curPos[1] << std::endl;
 }
 
-int snakeDfs(Maze maze, std::vector<int> curPos, int rightBound, int bottomBound, std::vector<std::vector<int> > &visited) {
+int snakeDfs(Maze maze, std::vector<int> curPos, int rightBound, int bottomBound, std::vector<std::vector<int> > &visited, std::vector<int> curStack) {
 /* Maze format
     0 1 2 3 4 5 6 7 8 9
   0
@@ -41,6 +41,8 @@ int snakeDfs(Maze maze, std::vector<int> curPos, int rightBound, int bottomBound
 */
 
   sleep(1);
+
+  //Pass in a second stack as parameter so snake can display a backtrack
 
 
   maze.setMazeVal(curPos[0], curPos[1], 'O');
@@ -67,7 +69,7 @@ int snakeDfs(Maze maze, std::vector<int> curPos, int rightBound, int bottomBound
   //up
   if (mazeRepresentation[curPos[0] - 1][curPos[1]] == ' ') {
     std::vector<int> newPos = {curPos[0] - 1, curPos[1]};
-    if (snakeDfs(maze, newPos, rightBound, bottomBound, visited)) {
+    if (snakeDfs(maze, newPos, rightBound, bottomBound, visited, curStack)) {
       return 1;
     }
   }
@@ -75,7 +77,7 @@ int snakeDfs(Maze maze, std::vector<int> curPos, int rightBound, int bottomBound
   //right
   if (mazeRepresentation[curPos[0]][curPos[1] + 1] == ' ') {
     std::vector<int> newPos = {curPos[0], curPos[1] + 1};
-    if (snakeDfs(maze, newPos, rightBound, bottomBound, visited)) {
+    if (snakeDfs(maze, newPos, rightBound, bottomBound, visited, curStack)) {
       return 1;
     }
   }
@@ -83,7 +85,7 @@ int snakeDfs(Maze maze, std::vector<int> curPos, int rightBound, int bottomBound
   //down
   if (mazeRepresentation[curPos[0] + 1][curPos[1]] == ' ') {
     std::vector<int> newPos = {curPos[0] + 1, curPos[1]};
-    if (snakeDfs(maze, newPos, rightBound, bottomBound, visited)) {
+    if (snakeDfs(maze, newPos, rightBound, bottomBound, visited, curStack)) {
       return 1;
     }
   }
@@ -91,7 +93,7 @@ int snakeDfs(Maze maze, std::vector<int> curPos, int rightBound, int bottomBound
   //left
   if (mazeRepresentation[curPos[0]][curPos[1] - 1] == ' ') {
     std::vector<int> newPos = {curPos[0], curPos[1] - 1};
-    if (snakeDfs(maze, newPos, rightBound, bottomBound, visited)) {
+    if (snakeDfs(maze, newPos, rightBound, bottomBound, visited, curStack)) {
       return 1;
     }
   }
@@ -105,7 +107,8 @@ int main() {
   Maze maze(8, 8);
   std::cout << maze << std::endl;
   std::vector<int> curPos = {1, 0};
+  std::vector<int> curStack;
   std::vector<std::vector<int> > visited = initializeVisitedArray(maze);
-  snakeDfs(maze, curPos, maze.getRows(), maze.getCols(), visited);
+  snakeDfs(maze, curPos, maze.getRows(), maze.getCols(), visited, curStack);
   return 0;
 }
