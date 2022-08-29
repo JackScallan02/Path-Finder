@@ -67,36 +67,34 @@ int snakeDfs(Maze maze, std::vector<int> curPos, int rightBound, int bottomBound
   9
 */
 
-
 /*
 Algorithm:
-Keep entire path in stack
-If a dead end is found
-  pop current node from the stack
-  update the maze representation
-
+Keep entire path in a stack as we visit each node
+If a dead end is found, or no nodes left to visit:
+  pop the current node from the stack
 */
 
 
   std::vector<std::vector<char> > mazeRepresentation = maze.getMaze();
   std::vector<std::vector<int> > stack;
+
   stack.push_back(curPos);
-  int numberOfNeighbors;
+  int numberOfNeighbors = 0;
 
   while (!stack.empty()) {
-    printStack(stack);
-
     curPos = stack.back();
-    stack.pop_back();
-
-    maze.setMazeVal(curPos[0], curPos[1], 'O');
-
-    visited[curPos[0]][curPos[1]] = 1;
 
 
-    sleep(1);
-    std::cout << maze << std::endl;
+    if (!visited[curPos[0]][curPos[1]]) {
+      maze.setMazeVal(curPos[0], curPos[1], 'O');
+      sleep(1);
+      std::cout << maze << std::endl;
+      visited[curPos[0]][curPos[1]] = 1;
+    }
 
+
+
+    numberOfNeighbors = 0;
 
     if (curPos[0] == bottomBound || curPos[1] == rightBound || curPos[0] == 0) {
       break;
@@ -121,6 +119,7 @@ If a dead end is found
       std::vector<int> newPos = {curPos[0], curPos[1] + 1};
       numberOfNeighbors++;
       stack.push_back(newPos);
+
     }
 
     //up
@@ -128,27 +127,29 @@ If a dead end is found
       std::vector<int> newPos = {curPos[0] - 1, curPos[1]};
       numberOfNeighbors++;
       stack.push_back(newPos);
+
     }
 
+
+    if (numberOfNeighbors == 0) {
+      //Dead end found
+      maze.setMazeVal(curPos[0], curPos[1], ' ');
+      sleep(1);
+      std::cout << maze << std::endl;
+      stack.pop_back();
+      //std::cout << "Dead end" << std::endl;
+
+    }
   }
 
   return 0;
 
 }
 
-//NEED TO DO:
-/*
-Keep 3d array of curPosInfo
-curPosInfo[x][y] = [backTrackAmount, numVerticesLeftToVisit]
-Then we can check curPosInfo if numVerticesLeftToVisit > 0. If it is,
-  do not back track.
-If it is 0, back track by the backtrackamount.
-*/
-
 
 int main() {
   //Maze maze(8, 8);
-  Maze maze = makeTestMaze();
+  Maze maze(8, 8);
   std::cout << maze << std::endl;
   std::vector<int> curPos = {1, 0};
   std::vector<std::vector<int> > visited = initialize2DVector(maze);
