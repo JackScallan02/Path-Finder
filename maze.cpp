@@ -157,10 +157,18 @@ void Maze::setMazeVal(int i, int j, char val) {
 std::ostream& operator<<(std::ostream &s, Maze &maze) {
   //Returns a string representation of the maze
   std::string output = "";
+  std::vector<std::vector<char> > mazeRepresentation = maze.getMaze();
 
   for (int i = 0; i < maze.getRows() + 2; i++) {
     for (int j = 0; j < maze.getCols() + 2; j++) {
-      output += maze.getMaze()[i][j];
+      if (mazeRepresentation[i][j] == 'O') {
+        output += "\033[32m";
+        output += mazeRepresentation[i][j];
+        output += "\033[0m";
+      } else {
+        output += mazeRepresentation[i][j];
+      }
+
       output += " ";
     }
     output += "\n";
