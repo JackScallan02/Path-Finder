@@ -81,10 +81,11 @@ void Maze::setBorderEntrances() {
 
 }
 
+
 void Maze::setInnerPaths() {
   //Sets a proportion of 'X' items in the maze to ' ' (open paths)
   for (int i = 2; i < numRows - 1; i++) {
-    for (int j = 2; j < numCols - 1; j++) {
+    for (int j = 2; j < numCols; j++) {
       if (getRandomInt(0, 1)) {
         mazeRepresentation[i][j] = ' ';
       }

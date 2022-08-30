@@ -4,8 +4,6 @@
 #include "maze.h"
 
 
-
-//g++ mazeRepresentation.cpp snake.cpp -o a -std=c++11
 std::vector<std::vector<int> > initialize2DVector(Maze maze) {
   std::vector<std::vector<int> > vect;
   for (int i = 0; i < maze.getRows() + 2; i++) {
@@ -16,28 +14,6 @@ std::vector<std::vector<int> > initialize2DVector(Maze maze) {
     vect.push_back(row);
   }
   return vect;
-}
-
-void backTrack(std::vector<int> &stack, Maze &maze) {
-  //std::cout << "PATH: ";
-
-
-}
-
-Maze makeTestMaze() {
-  Maze testMaze(8, 8);
-  for (int row = 1; row < 9; row++) {
-    for (int col = 1; col < 9; col++) {
-      if (row == 4 && col < 5) {
-        testMaze.setMazeVal(row, col, ' ');
-      } else if ((row == 2 || row == 3 || row == 5 || row == 6) && col == 3) {
-        testMaze.setMazeVal(row, col, ' ');
-      } else {
-        testMaze.setMazeVal(row, col, 'X');
-      }
-    }
-  }
-  return testMaze;
 }
 
 
@@ -84,7 +60,6 @@ If a dead end is found, or no nodes left to visit:
   while (!stack.empty()) {
     curPos = stack.back();
 
-
     if (!visited[curPos[0]][curPos[1]]) {
       maze.setMazeVal(curPos[0], curPos[1], 'O');
       sleep(1);
@@ -92,11 +67,10 @@ If a dead end is found, or no nodes left to visit:
       visited[curPos[0]][curPos[1]] = 1;
     }
 
-
-
     numberOfNeighbors = 0;
 
     if (curPos[0] == bottomBound || curPos[1] == rightBound || curPos[0] == 0) {
+      //We found an exit
       break;
     }
 
@@ -119,7 +93,6 @@ If a dead end is found, or no nodes left to visit:
       std::vector<int> newPos = {curPos[0], curPos[1] + 1};
       numberOfNeighbors++;
       stack.push_back(newPos);
-
     }
 
     //up
@@ -127,7 +100,6 @@ If a dead end is found, or no nodes left to visit:
       std::vector<int> newPos = {curPos[0] - 1, curPos[1]};
       numberOfNeighbors++;
       stack.push_back(newPos);
-
     }
 
 
@@ -137,18 +109,15 @@ If a dead end is found, or no nodes left to visit:
       sleep(1);
       std::cout << maze << std::endl;
       stack.pop_back();
-      //std::cout << "Dead end" << std::endl;
-
     }
   }
 
   return 0;
-
 }
 
 
+
 int main() {
-  //Maze maze(8, 8);
   Maze maze(8, 8);
   std::cout << maze << std::endl;
   std::vector<int> curPos = {1, 0};
